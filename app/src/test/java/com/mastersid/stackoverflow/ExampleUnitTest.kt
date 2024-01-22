@@ -1,4 +1,4 @@
-package com.example.stackoverflow
+package com.mastersid.stackoverflow
 
 import org.junit.Test
 

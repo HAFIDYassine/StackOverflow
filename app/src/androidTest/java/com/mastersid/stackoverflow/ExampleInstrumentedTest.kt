@@ -1,4 +1,4 @@
-package com.example.stackoverflow
+package com.mastersid.stackoverflow
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

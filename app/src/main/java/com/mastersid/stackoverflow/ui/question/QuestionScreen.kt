@@ -1,4 +1,4 @@
-package com.example.stackoverflow.ui
+package com.mastersid.stackoverflow.ui.question
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
@@ -17,45 +16,16 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.stackoverflow.data.Question
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
+import androidx.lifecycle.viewmodel.compose.viewModel
+
 
 @Composable
-fun QuestionScreen() {
-    val questionList = remember {
-        mutableStateOf(
-            listOf(
-                Question(
-                    "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum ",
-                    1,
-                    "Kotlin doesn't work",
-                    3
-                ),
-                Question(
-                    "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-                    2,
-                    "Short question",
-                    1
-                ),
-                Question(
-                    "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-                    3,
-                    "a very very very very very very very very very long question",
-                    4
-                )
-            )
-        )
-
-    }
+fun QuestionScreen(questionViewModel: QuestionViewModel = viewModel()) {
 
     Box {
         LazyColumn(
@@ -63,9 +33,8 @@ fun QuestionScreen() {
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            items(questionList.value)
+            items(questionViewModel.questionList.value)
             { question ->
-
 
                 Row(
                     Modifier.fillMaxWidth()
@@ -94,27 +63,14 @@ fun QuestionScreen() {
                         style = MaterialTheme.typography.displaySmall,
                         textAlign = TextAlign.Start
                     )
-
-
                 }
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { questionViewModel.updateQuestions() },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text("Update questions")
                 }
-
             }
-
-
-
-            }
-
-
         }
-
+    }
 }
-
-
-
-
