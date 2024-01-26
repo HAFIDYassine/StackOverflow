@@ -18,9 +18,8 @@ class QuestionRepository {
 
     suspend fun updateQuestionsInfo() {
         _questionsFlow.value = QuestionsResponse.Pending
-        delay(5000) // Attendre 5 secondes
+        delay(5000)
 
-        // Générer une liste aléatoire de questions
         val randomQuestions = List(Random.nextInt(1, 10)) {
             Question(
                 "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",

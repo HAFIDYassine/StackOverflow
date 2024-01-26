@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mastersid.stackoverflow.data.Question
 import com.mastersid.stackoverflow.repository.QuestionRepository
+import com.mastersid.stackoverflow.repository.QuestionsResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,35 +18,29 @@ class QuestionViewModel @Inject constructor(
     : ViewModel() {
 
     val isUpdating = mutableStateOf(false)
+    val questions = mutableStateOf(emptyList<Question>())
 
-    val questions = mutableStateOf(
-        listOf(
-            Question(
-                "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum ",
-                1,
-                "Kotlin doesn't work",
-                3
-            ),
-            Question(
-                "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-                2,
-                "Short question",
-                1
-            ),
-            Question(
-                "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-                3,
-                "a very very very very very very very very very long question",
-                4
-            )
-        )
-    )
+    init {
+        viewModelScope.launch {
+            repository.questionsFlow.collect { response ->
+                when (response) {
+                    is QuestionsResponse.Pending -> {
+                        isUpdating.value = true
+                    }
+                    is QuestionsResponse.Success -> {
+                        isUpdating.value = false
+                        questions.value = response.questions
+                    }
+                }
+            }
+        }
+    }
 
     fun updateQuestions() {
         viewModelScope.launch {
             Log.d("viewmodel","hello from updateQuestions()")
             isUpdating.value = true
-            // repository.updateQuestionsInfo()
+            repository.updateQuestionsInfo()
             isUpdating.value = false
         }
     }
