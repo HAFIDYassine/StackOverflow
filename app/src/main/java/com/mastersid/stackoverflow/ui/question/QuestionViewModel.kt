@@ -5,9 +5,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mastersid.stackoverflow.data.Question
+import com.mastersid.stackoverflow.repository.QuestionRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class QuestionViewModel : ViewModel() {
+@HiltViewModel
+class QuestionViewModel @Inject constructor(
+    private val repository: QuestionRepository
+)
+    : ViewModel() {
 
     val isUpdating = mutableStateOf(false)
 
@@ -37,6 +44,9 @@ class QuestionViewModel : ViewModel() {
     fun updateQuestions() {
         viewModelScope.launch {
             Log.d("viewmodel","hello from updateQuestions()")
+            isUpdating.value = true
+            // repository.updateQuestionsInfo()
+            isUpdating.value = false
         }
     }
 }
