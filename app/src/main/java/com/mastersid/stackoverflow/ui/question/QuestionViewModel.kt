@@ -1,5 +1,6 @@
 package com.mastersid.stackoverflow.ui.question
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -35,6 +36,7 @@ class QuestionViewModel : ViewModel() {
 
     fun updateQuestions() {
         viewModelScope.launch {
+            Log.d("viewmodel","hello from updateQuestions()")
         }
     }
 }
