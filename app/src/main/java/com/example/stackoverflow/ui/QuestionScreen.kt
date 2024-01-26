@@ -3,67 +3,42 @@ package com.example.stackoverflow.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.stackoverflow.data.Question
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.stackoverflow.QuestionsViewModel
+import com.example.stackoverflow.UpdateQuestionButton
 
 @Composable
-fun QuestionScreen() {
-    val questionList = remember {
-        mutableStateOf(
-            listOf(
-                Question(
-                    "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum ",
-                    1,
-                    "Kotlin doesn't work",
-                    3
-                ),
-                Question(
-                    "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-                    2,
-                    "Short question",
-                    1
-                ),
-                Question(
-                    "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-                    3,
-                    "a very very very very very very very very very long question",
-                    4
-                )
-            )
-        )
+fun QuestionScreen(questionsViewModel: QuestionsViewModel = viewModel()) {
+    val questionList by questionsViewModel.question.observeAsState(initial = emptyList())
+    val refreshing by questionsViewModel.isUpdating.observeAsState(initial = false)
 
-    }
 
-    Box {
+    Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            items(questionList.value)
+            items(questionList)
             { question ->
 
 
@@ -73,7 +48,7 @@ fun QuestionScreen() {
                     Column(
                         modifier = Modifier.width(320.dp)
                     ) {
-                        LinearProgressIndicator()
+
                         Text(
                             text = question.title,
                             maxLines = 1,
@@ -97,21 +72,31 @@ fun QuestionScreen() {
 
 
                 }
-                Button(
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text("Update questions")
-                }
-
-            }
-
 
 
             }
 
 
         }
+        if (refreshing) {
+            LinearProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        }
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+
+        ) {
+
+            //LinearProgressIndicator()
+            UpdateQuestionButton(
+                updateQuestions = questionsViewModel::updateQuestions,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+
+
+    }
 
 }
 
