@@ -8,7 +8,9 @@ import kotlinx.coroutines.launch
 
 class QuestionViewModel : ViewModel() {
 
-    val questionList = mutableStateOf(
+    val isUpdating = mutableStateOf(false)
+
+    val questions = mutableStateOf(
         listOf(
             Question(
                 "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum ",
