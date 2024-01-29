@@ -23,7 +23,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.stackoverflow.QuestionsViewModel
+import com.example.stackoverflow.ViewModel.QuestionsViewModel
 import com.example.stackoverflow.UpdateQuestionButton
 
 @Composable
@@ -56,12 +56,12 @@ fun QuestionScreen(questionsViewModel: QuestionsViewModel = viewModel()) {
                             style = MaterialTheme.typography.headlineSmall
 
                         )
-                        Text(
+                        /*Text(
                             text = question.body,
                             maxLines = 2,
                             overflow = TextOverflow.Ellipsis,
                             fontSize = 16.sp,
-                        )
+                        )*/
                     }
 
                     Text(
@@ -87,11 +87,9 @@ fun QuestionScreen(questionsViewModel: QuestionsViewModel = viewModel()) {
                 .fillMaxWidth()
 
         ) {
-
-            //LinearProgressIndicator()
             UpdateQuestionButton(
                 updateQuestions = questionsViewModel::updateQuestions,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
             )
         }
 

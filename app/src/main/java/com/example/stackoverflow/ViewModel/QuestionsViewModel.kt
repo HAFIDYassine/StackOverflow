@@ -1,9 +1,11 @@
-package com.example.stackoverflow
+package com.example.stackoverflow.ViewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.stackoverflow.QuestionResponse
+import com.example.stackoverflow.Repository.QuestionRepository
 import com.example.stackoverflow.data.Question
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
