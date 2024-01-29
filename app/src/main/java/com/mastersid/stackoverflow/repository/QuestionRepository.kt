@@ -18,7 +18,7 @@ class QuestionRepository {
 
     suspend fun updateQuestionsInfo() {
         _questionsFlow.value = QuestionsResponse.Pending
-        delay(5000)
+        delay(2000)
 
         val randomQuestions = List(Random.nextInt(1, 10)) {
             Question(

@@ -2,6 +2,7 @@ package com.mastersid.stackoverflow.ui.question
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mastersid.stackoverflow.data.Question
@@ -17,11 +18,12 @@ class QuestionViewModel @Inject constructor(
 )
     : ViewModel() {
 
-    val isUpdating = mutableStateOf(false)
+    val isUpdating = MutableLiveData(false)
     val questions = mutableStateOf(emptyList<Question>())
 
     init {
         viewModelScope.launch {
+            updateQuestions()
             repository.questionsFlow.collect { response ->
                 when (response) {
                     is QuestionsResponse.Pending -> {

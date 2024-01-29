@@ -13,6 +13,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -27,6 +28,7 @@ import com.mastersid.stackoverflow.data.Question
 @Composable
 fun QuestionScreen(questionViewModel: QuestionViewModel = viewModel()) {
 
+    val isUpdating = questionViewModel.isUpdating.observeAsState(false).value
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -34,22 +36,23 @@ fun QuestionScreen(questionViewModel: QuestionViewModel = viewModel()) {
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         item {
-            LinearProgressIndicator(
-                modifier = Modifier.fillMaxWidth(),
-                progress = 0.5f,
-            )
+            if (isUpdating) {
+                LinearProgressIndicator(
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
         }
-        items(questionViewModel.questions.value)
-        { question ->
+        items(questionViewModel.questions.value) { question ->
 
             Row(
                 Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
 
-            ) {
-                QuestionAndBody(question = question, modifier = Modifier
-                    .weight(4f)
-                    .fillMaxWidth()
+                ) {
+                QuestionAndBody(
+                    question = question, modifier = Modifier
+                        .weight(4f)
+                        .fillMaxWidth()
                 )
                 Text(
                     text = question.answerCount.toString(),
@@ -60,11 +63,9 @@ fun QuestionScreen(questionViewModel: QuestionViewModel = viewModel()) {
                         .fillMaxWidth()
                 )
             }
-
         }
         item {
-            Button(
-                modifier = Modifier.fillMaxWidth(),
+            Button(modifier = Modifier.fillMaxWidth(),
                 onClick = { questionViewModel.updateQuestions() }) {
                 Text("Update questions")
             }
