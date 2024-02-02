@@ -1,6 +1,7 @@
 package com.example.stackoverflow.Repository
 
 import android.util.Log
+import com.example.stackoverflow.Dao.StackDao
 import com.example.stackoverflow.QuestionResponse
 import com.example.stackoverflow.WebService.QuestionWebservice
 import kotlinx.coroutines.flow.Flow
@@ -9,6 +10,7 @@ import javax.inject.Inject
 
  class QuestionRepositoryImpl @Inject constructor(
     private val questionwebservice: QuestionWebservice,
+     private val questionDao: StackDao,
 ) : QuestionRepository {
      override val questionResponse: MutableStateFlow<QuestionResponse> = MutableStateFlow(
          QuestionResponse.Success(emptyList())
@@ -22,7 +24,7 @@ import javax.inject.Inject
                 sort = "activity",
                 site = "stackoverflow"
             )
-        questionResponse.emit(QuestionResponse.Success(list))
+        questionDao.insertAll(list)
 
     }
 
