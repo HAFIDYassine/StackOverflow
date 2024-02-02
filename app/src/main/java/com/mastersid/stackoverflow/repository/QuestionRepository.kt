@@ -22,10 +22,10 @@ class QuestionRepository {
 
         val randomQuestions = List(Random.nextInt(1, 10)) {
             Question(
-                "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-                it,
-                "Question $it",
-                Random.nextInt(1, 5)
+                body = "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+                id = it,
+                title = "Question $it",
+                answerCount = Random.nextInt(1, 5)
             )
         }
 

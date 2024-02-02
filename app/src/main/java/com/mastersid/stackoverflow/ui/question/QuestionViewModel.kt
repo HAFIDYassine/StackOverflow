@@ -6,15 +6,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mastersid.stackoverflow.data.Question
-import com.mastersid.stackoverflow.repository.QuestionRepository
 import com.mastersid.stackoverflow.repository.QuestionsResponse
+import com.mastersid.stackoverflow.repository.StackOverflowRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class QuestionViewModel @Inject constructor(
-    private val repository: QuestionRepository
+    private val repository: StackOverflowRepository
 )
     : ViewModel() {
 
