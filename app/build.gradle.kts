@@ -81,4 +81,11 @@ dependencies {
     // ObserveAsState
     implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
 
+    // Retrofit
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
+
+    // Moshi
+    implementation ("com.squareup.moshi:moshi:1.12.0")
+    kapt ("com.squareup.moshi:moshi-kotlin-codegen:1.12.0")
 }
