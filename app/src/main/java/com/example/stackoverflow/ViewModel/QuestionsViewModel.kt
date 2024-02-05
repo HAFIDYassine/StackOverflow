@@ -36,7 +36,7 @@ class QuestionsViewModel @Inject constructor(
                 when(response){
                     is QuestionResponse.Pending -> _isUpdating.postValue(true)
                     is QuestionResponse.Success -> {
-                        _question.postValue(response.list)
+                        _question.postValue(response.list.sortedBy { question -> question.answerCount })
                         _isUpdating.postValue(false)
 
                     }

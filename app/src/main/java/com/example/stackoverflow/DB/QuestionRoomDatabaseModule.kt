@@ -1,8 +1,7 @@
-package com.example.stackoverflow
+package com.example.stackoverflow.DB
 
 import android.content.Context
 import androidx.room.Room
-import com.example.stackoverflow.DB.StackDatabase
 import com.example.stackoverflow.Dao.StackDao
 import dagger.Module
 import dagger.Provides

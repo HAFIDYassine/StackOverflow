@@ -10,7 +10,7 @@ class QuestionMoshiAdapter {
     @FromJson
     fun fromJson(listQuestionJson: ListQuestionJson): List<Question> {
         return listQuestionJson.items.map { questionJson ->
-            Question(questionJson.title, questionJson.answer_count)
+            Question(questionJson.id,questionJson.title, questionJson.answer_count)
         }
     }
 
@@ -18,7 +18,7 @@ class QuestionMoshiAdapter {
     fun ToJson(listQuestion: List<Question>): ListQuestionJson {
         return ListQuestionJson(
             listQuestion.map {question ->
-            QuestionJson(question.title, question.answerCount)
+            QuestionJson(question.id,question.title, question.answerCount)
             }
         )
     }

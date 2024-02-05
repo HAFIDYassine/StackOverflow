@@ -12,6 +12,6 @@ interface StackDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(list: List<Question>)
 
-    @Query("SELECT * FROM question_table")
+    @Query("SELECT * FROM question_table ORDER BY answerCount DESC")
     fun getQuestionListFlow(): Flow<List<Question>>
 }
