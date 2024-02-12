@@ -23,6 +23,9 @@ class QuestionsViewModel @Inject constructor(
     private val _isUpdating = MutableLiveData(false)
     val isUpdating: LiveData<Boolean> = _isUpdating
 
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String> = _error
+
     fun updateQuestions() {
         viewModelScope.launch(Dispatchers.IO){
             questionRepository.updateQuestionsInfo()
@@ -38,17 +41,16 @@ class QuestionsViewModel @Inject constructor(
                     is QuestionResponse.Success -> {
                         _question.postValue(response.list.sortedBy { question -> question.answerCount })
                         _isUpdating.postValue(false)
-
                     }
+                    is QuestionResponse.Error -> {
+                        _isUpdating.postValue(false)
+                        _error.postValue(response.message)
+                    }
+
                 }
 
             }
         }
     }
-
-
-
-
-
 
 }

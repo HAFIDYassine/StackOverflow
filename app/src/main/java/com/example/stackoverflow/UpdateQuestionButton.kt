@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun UpdateQuestionButton(updateQuestions: () -> Unit, modifier: Modifier) {
+fun UpdateQuestionButton(updateQuestions: () -> Unit, modifier: Modifier, error : Boolean = false) {
     Button(onClick = updateQuestions,
         modifier = Modifier
             .fillMaxWidth()
