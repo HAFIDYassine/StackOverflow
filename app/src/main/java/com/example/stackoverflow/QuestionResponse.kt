@@ -9,7 +9,4 @@ sealed interface QuestionResponse {
     value class Success(val list: List<Question>) : QuestionResponse
     data class Error(val message: String) : QuestionResponse
 
-    @JvmInline
-    value class Error(val message: String) : QuestionResponse
-
 }
